@@ -11,3 +11,9 @@ export function clearSession(){cookies().delete(COOKIE)}
 export async function getSession(){try{const token=cookies().get(COOKIE)?.value;if(!token)return null;const [payload,sig]=token.split('.');if(!payload||!sig)return null;const a=Buffer.from(sig),b=Buffer.from(sign(payload));if(a.length!==b.length||!timingSafeEqual(a,b))return null;const parsed=JSON.parse(Buffer.from(payload,'base64url').toString());if(parsed.exp<Date.now()||typeof parsed.uid!=='string')return null;const rows=await query<{id:string;name:string;email:string;organization_id:string;role:string}>(`SELECT u.id,u.name,u.email,m.organization_id,m.role FROM users u JOIN organization_members m ON m.user_id=u.id WHERE u.id=$1 AND u.is_active=true ORDER BY m.joined_at LIMIT 1`,[parsed.uid]);return rows[0]??null}catch{return null}}
 export function validOrigin(req:Request){const origin=req.headers.get('origin');if(!origin)return false;try{return new URL(origin).host===new URL(req.url).host}catch{return false}}
 export function unauthorized(){return Response.json({error:'Iniciá sesión para continuar'},{status:401})}
+
+// Return the authenticated user ID, or null when there is no valid session.
+export async function getUserId(): Promise<string | null> {
+  const session = await getSession();
+  return session?.id ?? null;
+}

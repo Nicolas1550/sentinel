@@ -1,0 +1,7 @@
+SENTINEL V6: corrección de getDb() para consultas SQL etiquetadas.
+
+IMPORTANTE: El ZIP recibido mezcla rutas de ATLAS con SENTINEL. Este parche resuelve la incompatibilidad de tipos conocida, pero no garantiza que las rutas ATLAS funcionen sobre el esquema de SENTINEL. No desplegar en producción sin revisar las rutas y migraciones.
+
+.env.local se excluyó deliberadamente. Configurar DATABASE_URL y SESSION_SECRET en Vercel > Settings > Environment Variables.
+
+Comprobar localmente: npm install; npm run build; npm test

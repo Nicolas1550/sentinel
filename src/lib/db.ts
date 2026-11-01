@@ -9,6 +9,15 @@ export function isDatabaseConfigured(): boolean {
   return Boolean(process.env.DATABASE_URL?.trim());
 }
 
-export function getDb(): Pool {
-  return pool;
+/** Execute tagged SQL templates with pg's parameter binding. */
+export function getDb() {
+  return async function sql<T extends Record<string, unknown> = Record<string, unknown>>(
+    strings: TemplateStringsArray,
+    ...values: unknown[]
+  ): Promise<T[]> {
+    const statement = strings.reduce((acc, part, index) =>
+      acc + part + (index < values.length ? `$${index + 1}` : ''), '');
+    const result = await pool.query(statement, values);
+    return result.rows as T[];
+  };
 }

@@ -1,0 +1,2 @@
+export type SentinelEvent={event_type:string;source_ip:string;user_identifier?:string;message?:string;external_event_id?:string;metadata?:Record<string,unknown>};
+export declare class SentinelClient{constructor(config:{url:string;apiKey:string;timeoutMs?:number});track(event:SentinelEvent):Promise<{duplicate:boolean;incident:boolean}>;safeTrack(event:SentinelEvent):Promise<{duplicate:boolean;incident:boolean}|null>}

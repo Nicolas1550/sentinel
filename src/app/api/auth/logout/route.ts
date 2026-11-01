@@ -1,0 +1,1 @@
+import {clearSession,validOrigin} from '@/lib/auth';export async function POST(req:Request){if(!validOrigin(req))return Response.json({error:'Origen no permitido'},{status:403});clearSession();return Response.json({ok:true})}

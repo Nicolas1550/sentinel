@@ -1,0 +1,13 @@
+ATLAS V4 — EMPEZÁ POR ACÁ
+=========================
+
+Si ya tenés ATLAS V3 conectado a Neon:
+1. NO ejecutes 00-INSTALAR-TODO.sql ni borres tablas.
+2. Confirmá que V2 (04) y V3 (05) estén aplicados.
+3. Ejecutá únicamente database/06-ATLAS-V4.sql en Neon SQL Editor.
+4. Abrí esta carpeta en VS Code y copiá tu .env.local privado.
+5. Agregá CRON_SECRET si querés activar sincronización programada.
+6. Ejecutá npm.cmd ci y los comandos de prueba del README.
+
+No incluye tus secretos ni modifica automáticamente tu base Neon.
+Para instrucciones completas leé README-V4-INSTALAR.txt y CAMBIOS-V4.md.
